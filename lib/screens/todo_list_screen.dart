@@ -27,7 +27,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   }
 
   //
-  _buildTask(Task task) {
+  Widget _buildTask(Task task) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
@@ -100,10 +100,11 @@ class _TodoListScreenState extends State<TodoListScreen> {
       body: FutureBuilder(
         future: _taskList,
         builder: (context, snapshot) {
+          //
           if (!snapshot.hasData) {
             return Center(
-                // child: CircularProgressIndicator(),
-                );
+              child: CircularProgressIndicator(),
+            );
           }
 
           final int completedTaskCount = snapshot.data
@@ -111,6 +112,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
               .toList()
               .length;
 
+          //
           return ListView.builder(
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(vertical: 60.0),

@@ -15,7 +15,7 @@ class DatabaseHelper {
   DatabaseHelper._instance();
 
   //our tables
-  String taskTable = 'task_table';
+  String taskTable = 'tasktable';
   String colId = 'id';
   String colTitle = 'title';
   String colDate = 'date';
@@ -45,7 +45,7 @@ class DatabaseHelper {
   //it takes the database and version
   void _createDb(Database db, int version) async {
     await db.execute(
-      "CREATE TABLE $taskTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate TEXT, $colPriority TEXT, $colStatus INTEGER",
+      'CREATE TABLE $taskTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate TEXT, $colPriority TEXT, $colStatus INTEGER)',
     );
   }
 

@@ -6,6 +6,7 @@ class Task {
   int status; //0 - incomplete , 1 - complete
 
   Task({this.title, this.date, this.priority, this.status});
+
   Task.withId({this.id, this.title, this.date, this.priority, this.status});
 
   //will change the task objects into a map so they can be used in the database
