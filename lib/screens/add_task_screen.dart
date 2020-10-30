@@ -45,6 +45,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  _delete() {
+    DatabaseHelper.instance.deleteTask(widget.task.id);
+    widget.updateTaskList();
+    Navigator.pop(context);
+  }
+
   _submit() {
     //if formkeys current state when validated is true then it will execute
     if (_formKey.currentState.validate()) {
@@ -55,9 +61,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       Task task = Task(title: _title, date: _date, priority: _priority);
 
       if (widget.task == null) {
+        //insert task
         task.status = 0;
         DatabaseHelper.instance.insertTask(task);
       } else {
+        //update task
+        task.id = widget.task.id;
         task.status = widget.task.status;
         DatabaseHelper.instance.updateTask(task);
       }
@@ -99,7 +108,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         //
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 80.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,9 +122,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                SizedBox(height: 40.0),
+                SizedBox(height: 20.0),
                 Text(
-                  "Add Task",
+                  widget.task == null ? "Add Task" : "Update Task",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 40.0,
@@ -226,7 +235,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   child: FlatButton(
                     child: Text(
-                      "Add",
+                      widget.task == null ? "Add" : "Update",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
@@ -235,6 +244,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     onPressed: _submit,
                   ),
                 ),
+                widget.task != null
+                    ? Container(
+                        margin: EdgeInsets.symmetric(vertical: 20.0),
+                        height: 60.0,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: FlatButton(
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          onPressed: _delete,
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

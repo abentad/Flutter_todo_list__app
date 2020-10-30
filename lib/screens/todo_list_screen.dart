@@ -57,8 +57,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 DatabaseHelper.instance.updateTask(task);
                 _updateTaskList();
               },
-              activeColor: Colors.red,
-              value: true,
+              activeColor: Theme.of(context).primaryColor,
+              value: task.status == 1 ? true : false,
             ),
             onTap: () {
               Navigator.push(
